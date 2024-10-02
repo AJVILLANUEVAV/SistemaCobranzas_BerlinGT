@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="ISO-8859-1">
+	<title>Creación de Registro de Pago</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+		integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+	<script th:src="@{/AccionesPago.js}"></script>
+	<style>
+		/* Adjust the space between navbar items */
+		#collapsibleNavbar .navbar-nav .nav-item:not(:last-child) {
+			margin-right: 150px;
+			/* Space between nav items */
+		}
+	</style>
+</head>
+
+<body>
+	<nav class="navbar navbar-expand-md bg-dark navbar-dark">
+		<!-- Brand -->
+		<a class="navbar-brand" href="#">Administracion de deudores</a>
+		<!-- Toggler/Collapse Button -->
+		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+		<!-- Combined Navbar links -->
+		<div class="collapse navbar-collapse" id="collapsibleNavbar">
+			<ul class="navbar-nav">
+				<li class="nav-item">
+					<a class="nav-link" th:href="@{/deudores}">Deudores</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" th:href="@{/RegistrarPagos}">Registrar Pago</a>
+				</li>
+			</ul>
+		</div>
+	</nav>
+	<div class="container mt-3">
+		<div class="row">
+
+			<div class="col-lg-6 col-md-6 col-sm-6 container justify-content-center card">
+				<h1 class="text-center"> Registro de nuevo pago </h1>
+
+				<!-- Mensaje de error -->
+				<div th:if="${error}" class="alert alert-danger">
+					<p th:text="${error}"></p>
+				</div>
+				<div class="card-body">
+					<form th:action="@{/RegistrarPagos}" th:object="${RegistrarPagos}" method="POST">
+						<input type="hidden" name="deudoresId" th:field="*{deudoresId}" />
+						<div class="form-group">
+							<label>Nombre deudor</label>
+							<input type="text" name="nombreDeudor" th:field="*{nombreDeudor}" class="form-control"
+								placeholder="Ingrese el nombre del deudor" readonly />
+						</div>
+						<div class="form-group">
+							<label for="fechaPago">Fecha del pago</label>
+							<input type="date" id="fechaPago" name="fechaPago" th:field="*{fechaPago}"
+								class="form-control" placeholder="Ingrese la fecha del pago" required />
+						</div>
+						<div class="form-group">
+							<label>Numero de la boleta</label>
+							<input type="text" name="boleta" th:field="*{boleta}" class="form-control"
+								placeholder="Ingrese el número de la boleta" />
+						</div>
+						<div class="form-group">
+							<label>Numero de Serie</label>
+							<input type="text" name="serie" th:field="*{serie}" class="form-control"
+								placeholder="Ingrese el número de serie de la boleta" />
+						</div>
+						<div class="form-group">
+							<label>Total pago</label>
+							<input type="text" name="montoPago" id="montoPago" th:field="*{montoPago}"
+								class="form-control" placeholder="Ingrese el monto de la deuda"
+								onchange="pagoPositivo()" />
+						</div>
+						<div class="form-group">
+							<label>Tipo de pago</label>
+							<select name="tipoPago" th:field="*{tipoPago}" onchange="updateTransferencia()"
+								class="form-control">
+								<option value="EFECTIVO" selected>Efectivo</option>
+								<option value="YAPE">Yape</option>
+								<option value="TRANSFERENCIA">Transferencia</option>
+							</select>
+						</div>
+						<div class="form-group">
+							<label>Documento de transferencia</label>
+							<input type="text" name="documentoTransferencia" th:field="*{documentoTransferencia}"
+								class="form-control" placeholder="Ingrese el documento de transferencia" />
+						</div>
+
+						<div class="box-footer">
+							<button type="submit" class="btn btn-primary">Guardar</button>
+						</div>
+
+					</form>
+
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+
+</html>

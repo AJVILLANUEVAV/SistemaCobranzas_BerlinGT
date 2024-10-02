@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="ISO-8859-1">
+	<title>LISTA DE DEUDORES</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+		integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+	<style>
+		/* Custom CSS to adjust nav item spacing */
+		.navbar-nav .nav-item {
+			margin-right: 150px;
+			/* Space between nav items */
+		}
+
+		.navbar-nav .nav-item:last-child {
+			margin-right: 0;
+			/* Removes margin from the last nav item */
+		}
+	</style>
+</head>
+
+<body>
+	<nav class="navbar navbar-expand-md bg-dark navbar-dark">
+		<!-- Brand -->
+		<a class="navbar-brand" href="#">Administración de deudores</a>
+		<!-- Toggler/Collapse Button -->
+		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+		<!-- Combined Navbar links -->
+		<div class="collapse navbar-collapse" id="collapsibleNavbar">
+			<ul class="navbar-nav">
+				<li class="nav-item">
+					<a class="nav-link" th:href="@{/deudores}">Deudores</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" th:href="@{/RegistrarPagos}">Registrar Pago</a>
+				</li>
+			</ul>
+		</div>
+	</nav>
+	<div class="container">
+		<div class="row">
+			<h1>Registrar Pagos</h1>
+		</div>
+
+		<div class="row">
+			<div class="col">
+				<form th:action="@{/deudores/name}" method="get">
+					<div class="input-group mb-3">
+						<div class="input-group-append ml-2">
+							<button type="submit" class="btn btn-primary">Buscar Deudores</button>
+						</div>
+						<input type="text" class="form-control"
+							style="margin-left: 30px;margin-right: 450px; width: auto;"
+							placeholder="Buscar deudor por Nombre o Apellido" name="buscarNombre_Apellido"
+							id="searchBox">
+					</div>
+				</form>
+			</div>
+		</div>
+		<table class="table table-striped table-bordered">
+			<thead class="table-dark">
+				<tr>
+					<th>Nombres</th>
+					<th>Apellidos</th>
+					<th>Correo</th>
+					<th>Teléfono</th>
+					<th>Dirección</th>
+					<th>Provincia</th>
+					<th>Acciones</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="st: ${deudoresModelo}">
+					<td th:text="${st.nombres}"></td>
+					<td th:text="${st.apellidos}"></td>
+					<td th:text="${st.correo}"></td>
+					<td th:text="${st.telefono}"></td>
+					<td th:text="${st.direccion}"></td>
+					<td th:text="${st.provincia}"></td>
+					<td>
+						<a th:href="@{/RegistrarPagos/nombrescompletos(id=${st.id})}" class="btn btn-primary">Crear
+							Pagos</a>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+		<div class="row">
+			<div class="col-lg-3">
+				<a th:href="@{/Listar_PagosTotales}" class="btn btn-primary btn-sm mb-3">Mostrar pagos totales</a>
+			</div>
+		</div>
+	</div>
+
+</body>
+
+</html>
