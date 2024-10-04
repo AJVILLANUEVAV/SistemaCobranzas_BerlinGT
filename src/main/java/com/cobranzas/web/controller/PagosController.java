@@ -92,9 +92,8 @@ public class PagosController {
 	public String findPagosTotalesByName(
 			@RequestParam(name = "buscarNombre_Apellido", required = false) String buscarNombre_Apellido, Model model) {
 
-		List<RegistroPagoDto> registroPagoTotalModelo = registroPagoService
-				.getRegistroPagoByName(buscarNombre_Apellido);
-		model.addAttribute("registroPagoTotalModelo", registroPagoTotalModelo);
-		return "Listar_PagosTotales";
+		List<DeudoresDto> lista = deudoresService.getDeudoresByName("%".concat(buscarNombre_Apellido).concat("%"));
+		model.addAttribute("deudoresModelo", lista);
+		return "Registrar_Pago";
 	}
 }
