@@ -77,11 +77,10 @@ public class DeudasController {
 	}
 	
 	@GetMapping("/listaDeudasTotales/name")
-	public String findDeudasTotalesByName(@RequestParam(name = "buscarNombre_Apellido1", required = false) String buscarNombre_Apellido, Model model) {
-		log.info("Ente a este modeloooooo");
-		List<RegistroDeudaDto> registroDeudaTotalModelo = registroDeudaService.getRegistroDeudaByName(buscarNombre_Apellido);
-		model.addAttribute("registroDeudaTotalModelo", registroDeudaTotalModelo);
-		return "Listar_DeudasTotales";
+	public String findDeudasTotalesByName(@RequestParam(name = "buscarNombre_Apellido", required = false) String buscarNombre_Apellido, Model model) {
+		List<DeudoresDto> lista = deudoresService.getDeudoresByName("%".concat(buscarNombre_Apellido).concat("%"));
+		model.addAttribute("deudoresModelo", lista);
+		return "Registrar_Deuda";
 	}
 		
 }
